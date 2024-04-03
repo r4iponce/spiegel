@@ -1,0 +1,5 @@
+steps:
+  test:
+    image: golang:1.22
+    commands:
+      - go test ./...

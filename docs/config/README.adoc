@@ -1,0 +1,18 @@
+= Configuration
+
+File format used is https://toml.io/en/[toml]
+
+== Options:
+* `clonedirectory`: Directory where mirror is clone
+* `log`: Log config section
+** `level`: Log level, allowed value is: "DEBUG", "INFO", "WARN", "ERROR", "FATAL"
+** `file`: Log file, default (empty) is in stderr
+** `RepoList`: List of mirrored git repository
+*** `URL`: Source URL
+*** `name`: directory name of clone
+
+== Example:
+[source,toml]
+----
+include::../../config.example.toml[]
+----

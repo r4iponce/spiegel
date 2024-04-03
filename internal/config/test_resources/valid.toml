@@ -1,0 +1,13 @@
+clonedirectory = "archive/"
+
+[log]
+level = "WARN"
+file = "log.txt"
+
+[[RepoList]]
+URL = "https://github.com/torvalds/linux/"
+name = "linux"
+
+[[RepoList]]
+URL = "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git"
+name = "linuxtwo"
