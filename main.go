@@ -2,6 +2,7 @@ package main
 
 import (
 	"git.gnous.eu/ada/git-mirror/internal/config"
+	"git.gnous.eu/ada/git-mirror/internal/git"
 	"github.com/sirupsen/logrus"
 )
 
@@ -20,7 +21,5 @@ func main() {
 	logrus.Info("Config loaded")
 	logrus.Debug("Config: ", initConfig)
 
-	cloneConfig := initConfig.RepoList[0]
-	cloneConfig.FullPath = initConfig.CloneDirectory + cloneConfig.Name
-	cloneConfig.FullClone()
+	git.StartClone(initConfig.RepoList)
 }

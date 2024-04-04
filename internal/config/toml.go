@@ -20,7 +20,15 @@ func LoadToml(file string) (Config, error) {
 		panic(err)
 	}
 
+	fillFullPath(&config)
+
 	return config, nil
+}
+
+func fillFullPath(config *Config) {
+	for i, content := range config.RepoList {
+		config.RepoList[i].FullPath = config.CloneDirectory + "/" + content.Name
+	}
 }
 
 func (config Config) Verify() error {
