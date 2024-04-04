@@ -23,7 +23,7 @@ func LoadToml(file string) (Config, error) {
 	return config, nil
 }
 
-func VerifyConfig(config Config) error {
+func (config Config) Verify() error {
 	allowedValue := []string{"DEBUG", "INFO", "WARN", "ERROR", "FATAL"}
 	found := false
 	for _, v := range allowedValue {
