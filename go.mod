@@ -1,4 +1,4 @@
-module git.gnous.eu/ada/git-mirror
+module git.gnous.eu/ada/spiegel
 
 go 1.22
 

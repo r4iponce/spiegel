@@ -3,7 +3,7 @@ package cron
 import (
 	"time"
 
-	"git.gnous.eu/ada/git-mirror/internal/git"
+	"git.gnous.eu/ada/spiegel/internal/git"
 	"github.com/sirupsen/logrus"
 )
 

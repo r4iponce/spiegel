@@ -1,8 +1,8 @@
 package config
 
 import (
-	"git.gnous.eu/ada/git-mirror/internal/git"
-	"git.gnous.eu/ada/git-mirror/internal/log"
+	"git.gnous.eu/ada/spiegel/internal/git"
+	"git.gnous.eu/ada/spiegel/internal/log"
 )
 
 type Config struct {

@@ -3,7 +3,7 @@ package config_test
 import (
 	"testing"
 
-	"git.gnous.eu/ada/git-mirror/internal/config"
+	"git.gnous.eu/ada/spiegel/internal/config"
 )
 
 func TestToml(t *testing.T) {

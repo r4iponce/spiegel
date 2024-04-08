@@ -1,3 +1,1 @@
 = A light git repository mirror tools
-
-Yes, i have no cool name idea for this project
