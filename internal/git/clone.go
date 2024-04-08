@@ -39,7 +39,6 @@ func (config RepoConfig) fullClone() {
 	if err != nil {
 		log.Panic(err)
 	}
-
 }
 
 func (config RepoConfig) Update() {

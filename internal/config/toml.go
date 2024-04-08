@@ -48,7 +48,5 @@ func (config Config) Verify() error {
 		return errCloneDirectoryUnwritable
 	}
 
-	// TODO: verify RepoList not redundant
-
 	return nil
 }

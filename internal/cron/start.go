@@ -7,7 +7,7 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-// start a regular background tasks
+// start a regular background tasks.
 func start(duration time.Duration, fn func(), name string) {
 	for {
 		time.Sleep(duration)
@@ -17,7 +17,7 @@ func start(duration time.Duration, fn func(), name string) {
 	}
 }
 
-// Launch all repo update background tasks
+// Launch all repo update background tasks.
 func Launch(duration time.Duration, config []git.RepoConfig) {
 	var counter int
 	for _, content := range config {
