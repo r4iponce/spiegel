@@ -1,4 +1,5 @@
 clonedirectory = "archive/"
+interval = 10
 
 [log]
 level = "DEBUG"

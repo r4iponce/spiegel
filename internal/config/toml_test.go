@@ -17,9 +17,13 @@ func testLoadTomlValid(t *testing.T) {
 	if err != nil {
 		t.Fatal("Cannot load config: ", err)
 	}
-	// {aa {WARN } [{aa yy} {bb yy}]}
+
 	if got.CloneDirectory != "archive/" {
 		t.Fatal("Invalid CloneDirectory: ", got.CloneDirectory)
+	}
+
+	if got.Interval != 10 {
+		t.Fatal("Invalid Interval: ", got.Interval)
 	}
 
 	if got.Log.Level != "WARN" {
