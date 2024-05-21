@@ -8,7 +8,7 @@ import (
 
 func (config Config) Init() {
 	if config.File != "" {
-		file, err := os.OpenFile(config.File, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0o640) //nolint:gomnd
+		file, err := os.OpenFile(config.File, os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0o640) //nolint:mnd
 		if err != nil {
 			logrus.Fatal("Cannot open log file: ", err)
 		}
