@@ -40,7 +40,8 @@ func main() {
 
 	git.StartClone(initConfig.RepoList)
 
-	cron.Launch(time.Minute, initConfig.RepoList)
+	duration := time.Duration(initConfig.Interval) * time.Minute
+	cron.Launch(duration, initConfig.RepoList)
 
 	quitSignal := make(chan os.Signal, 1)
 	signal.Notify(quitSignal, syscall.SIGINT, syscall.SIGTERM)

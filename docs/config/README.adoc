@@ -4,7 +4,7 @@ File format used is https://toml.io/en/[toml]. You can specify config file in fi
 
 == Options:
 * `clonedirectory`: Directory where mirror is clone
-* `interval`: Update interval
+* `interval`: Update interval in minute
 * `log`: Log config section
 ** `level`: Log level, allowed value is: "DEBUG", "INFO", "WARN", "ERROR", "FATAL"
 ** `file`: Log file, default (empty) is in stderr
