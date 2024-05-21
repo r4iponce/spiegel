@@ -8,34 +8,35 @@ import (
 )
 
 func LoadToml(file string) (Config, error) {
-	var config Config
+	var c Config
 
 	source, err := os.ReadFile(file)
 	if err != nil {
-		return config, errConfigFileNotReadable
+		return c, errConfigFileNotReadable
 	}
 
-	err = toml.Unmarshal(source, &config)
+	err = toml.Unmarshal(source, &c)
 	if err != nil {
 		panic(err)
 	}
 
-	fillFullPath(&config)
+	fillFullPath(&c)
+	fillFullPath(&c)
 
-	return config, nil
+	return c, nil
 }
 
-func fillFullPath(config *Config) {
-	for i, content := range config.RepoList {
-		config.RepoList[i].FullPath = config.CloneDirectory + "/" + content.Name
+func fillFullPath(c *Config) {
+	for i, content := range c.RepoList {
+		c.RepoList[i].FullPath = c.CloneDirectory + "/" + content.Name
 	}
 }
 
-func (config Config) Verify() error {
+func (c Config) Verify() error {
 	allowedValue := []string{"DEBUG", "INFO", "WARN", "ERROR", "FATAL"}
 	found := false
 	for _, v := range allowedValue {
-		if v == config.Log.Level {
+		if v == c.Log.Level {
 			found = true
 		}
 	}
@@ -44,7 +45,7 @@ func (config Config) Verify() error {
 		return errLogLevel
 	}
 
-	if unix.Access(config.CloneDirectory, unix.W_OK) != nil {
+	if unix.Access(c.CloneDirectory, unix.W_OK) != nil {
 		return errCloneDirectoryUnwritable
 	}
 

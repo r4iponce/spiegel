@@ -3,7 +3,6 @@ package git
 import (
 	"errors"
 	"io"
-	"log"
 	"os"
 
 	goGit "github.com/go-git/go-git/v5"
@@ -20,8 +19,8 @@ func StartClone(repoList []RepoConfig) {
 	}
 }
 
-func (config RepoConfig) fullClone() {
-	logrus.Debug("Clone ", config.Name, "...")
+func (c RepoConfig) fullClone() {
+	logrus.Debug("Clone ", c.Name, "...")
 	logger := logrus.New()
 	w := logger.Writer()
 	defer func(w *io.PipeWriter) {
@@ -31,25 +30,27 @@ func (config RepoConfig) fullClone() {
 		}
 	}(w)
 
-	_, err := goGit.PlainClone(config.FullPath, true, &goGit.CloneOptions{
-		URL:      config.URL,
+	repoConfig := &goGit.CloneOptions{
+		URL:      c.URL,
 		Progress: w,
 		Mirror:   true,
-	})
+	}
+
+	_, err := goGit.PlainClone(c.FullPath, true, repoConfig)
 	if err != nil {
-		log.Panic(err)
+		logrus.Error(err)
 	}
 }
 
-func (config RepoConfig) Update() {
-	repo, err := goGit.PlainOpen(config.FullPath)
+func (c RepoConfig) Update() {
+	repo, err := goGit.PlainOpen(c.FullPath)
 	if err != nil {
 		logrus.Error(err)
 
 		return
 	}
 
-	logrus.Debug("Clone ", config.Name, "...")
+	logrus.Debug("Clone ", c.Name, "...")
 	logger := logrus.New()
 	w := logger.Writer()
 	defer func(w *io.PipeWriter) {
@@ -64,7 +65,7 @@ func (config RepoConfig) Update() {
 	})
 	if err != nil {
 		if errors.Is(err, goGit.NoErrAlreadyUpToDate) {
-			logrus.Info(config.Name, " is already up-to-date")
+			logrus.Info(c.Name, " is already up-to-date")
 		} else {
 			logrus.Error(err)
 		}

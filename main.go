@@ -13,7 +13,18 @@ import (
 )
 
 func main() {
-	initConfig, err := config.LoadToml("config.example.toml")
+	var configPath string
+
+	switch len(os.Args) {
+	case 2: //nolint:mnd
+		configPath = os.Args[1]
+	case 1:
+		configPath = "config.toml"
+	default:
+		logrus.Fatal("Max 1 argument is valid.")
+	}
+
+	initConfig, err := config.LoadToml(configPath)
 	if err != nil {
 		logrus.Fatal(err)
 	}

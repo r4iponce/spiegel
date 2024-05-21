@@ -1,6 +1,6 @@
 = Configuration
 
-File format used is https://toml.io/en/[toml]
+File format used is https://toml.io/en/[toml]. You can specify config file in first argument. (ex: `./spiegel different.toml)`). Default path is `config.toml`
 
 == Options:
 * `clonedirectory`: Directory where mirror is clone
@@ -9,7 +9,7 @@ File format used is https://toml.io/en/[toml]
 ** `level`: Log level, allowed value is: "DEBUG", "INFO", "WARN", "ERROR", "FATAL"
 ** `file`: Log file, default (empty) is in stderr
 ** `RepoList`: List of mirrored git repository
-*** `URL`: Source URL
+*** `URL`: Source URL. You can use `https://<user>:<password>@git.example/repo.git` if you want http basic auth.
 *** `name`: directory name of clone
 
 == Example:
