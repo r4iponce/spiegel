@@ -1,13 +1,14 @@
 package utils
 
 import (
-	"github.com/sirupsen/logrus"
 	"regexp"
+
+	"github.com/sirupsen/logrus"
 )
 
-func IsHttpRepo(url string) bool {
+func IsHTTPRepo(url string) bool {
 	regex := "^http.?://.*"
-	result, err := regexp.Match(regex, []byte(url))
+	result, err := regexp.MatchString(regex, url)
 	if err != nil {
 		logrus.Fatal(err)
 	}

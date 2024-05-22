@@ -2,13 +2,13 @@ package git
 
 import (
 	"errors"
-	"git.gnous.eu/ada/spiegel/internal/utils"
-	"github.com/go-git/go-git/v5/plumbing/transport/ssh"
 	"io"
 	"os"
 	"strings"
 
+	"git.gnous.eu/ada/spiegel/internal/utils"
 	goGit "github.com/go-git/go-git/v5"
+	"github.com/go-git/go-git/v5/plumbing/transport/ssh"
 	"github.com/sirupsen/logrus"
 )
 
@@ -41,7 +41,7 @@ func (c RepoConfig) fullClone() {
 		Mirror:   true,
 	}
 
-	if !utils.IsHttpRepo(c.URL) {
+	if !utils.IsHTTPRepo(c.URL) {
 		key, err := os.ReadFile(c.SSHKey)
 		if err != nil {
 			logrus.Error(err)
@@ -90,7 +90,7 @@ func (c RepoConfig) Update() {
 		Progress: w,
 	}
 
-	if !utils.IsHttpRepo(c.URL) {
+	if !utils.IsHTTPRepo(c.URL) {
 		key, err := os.ReadFile(c.SSHKey)
 		if err != nil {
 			logrus.Error(err)
