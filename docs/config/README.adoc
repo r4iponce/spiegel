@@ -11,6 +11,7 @@ File format used is https://toml.io/en/[toml]. You can specify config file in fi
 ** `RepoList`: List of mirrored git repository
 *** `URL`: Source URL. You can use `https://<user>:<password>@git.example/repo.git` if you want http basic auth.
 *** `name`: directory name of clone
+*** `SSHKey`: SSH key for clone via ssh
 
 == Example:
 [source,toml]

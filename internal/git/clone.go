@@ -2,8 +2,11 @@ package git
 
 import (
 	"errors"
+	"git.gnous.eu/ada/spiegel/internal/utils"
+	"github.com/go-git/go-git/v5/plumbing/transport/ssh"
 	"io"
 	"os"
+	"strings"
 
 	goGit "github.com/go-git/go-git/v5"
 	"github.com/sirupsen/logrus"
@@ -27,6 +30,8 @@ func (c RepoConfig) fullClone() {
 		err := w.Close()
 		if err != nil {
 			logrus.Error(err)
+
+			return
 		}
 	}(w)
 
@@ -34,6 +39,27 @@ func (c RepoConfig) fullClone() {
 		URL:      c.URL,
 		Progress: w,
 		Mirror:   true,
+	}
+
+	if !utils.IsHttpRepo(c.URL) {
+		key, err := os.ReadFile(c.SSHKey)
+		if err != nil {
+			logrus.Error(err)
+
+			return
+		}
+
+		user := strings.Split(c.URL, "@")[0]
+		url := strings.Split(c.URL, "@")[1]
+
+		sshAuth, err := ssh.NewPublicKeys(user, key, "")
+		if err != nil {
+			logrus.Error(err)
+
+			return
+		}
+		repoConfig.Auth = sshAuth
+		repoConfig.URL = url
 	}
 
 	_, err := goGit.PlainClone(c.FullPath, true, repoConfig)
@@ -60,9 +86,30 @@ func (c RepoConfig) Update() {
 		}
 	}(w)
 
-	err = repo.Fetch(&goGit.FetchOptions{
+	fetchConfig := &goGit.FetchOptions{
 		Progress: w,
-	})
+	}
+
+	if !utils.IsHttpRepo(c.URL) {
+		key, err := os.ReadFile(c.SSHKey)
+		if err != nil {
+			logrus.Error(err)
+
+			return
+		}
+
+		user := strings.Split(c.URL, "@")[0]
+
+		sshAuth, err := ssh.NewPublicKeys(user, key, "")
+		if err != nil {
+			logrus.Error(err)
+
+			return
+		}
+		fetchConfig.Auth = sshAuth
+	}
+
+	err = repo.Fetch(fetchConfig)
 	if err != nil {
 		if errors.Is(err, goGit.NoErrAlreadyUpToDate) {
 			logrus.Info(c.Name, " is already up-to-date")
