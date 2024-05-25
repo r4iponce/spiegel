@@ -1,0 +1,11 @@
+steps:
+  - name: Release
+    image: golang:1.22.3
+    commands:
+      - go install github.com/goreleaser/goreleaser@latest
+      - goreleaser release
+    secrets: [ gitea_token ]
+    when:
+      event: tag
+      repo: ada/spiegel
+    depends_on: []

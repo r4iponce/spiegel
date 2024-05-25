@@ -1,0 +1,68 @@
+# yaml-language-server: $schema=https://goreleaser.com/static/schema.json
+# vim: set ts=2 sw=2 tw=0 fo=cnqoj
+
+gitea_urls:
+  api: https://git.gnous.eu/api/v1
+  download: https://git.gnous.eu
+  skip_tls_verify: false
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+    goarch:
+      - amd64
+      - arm64
+
+archives:
+  - format: tar.gz
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- title .Os }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
+      {{- if .Arm }}v{{ .Arm }}{{ end }}
+
+nfpms:
+  -
+    id: spiegel
+    package_name: spiegel
+    file_name_template: "{{ .ConventionalFileName }}"
+    vendor: Ada
+    homepage: https://git.gnous.eu/ada/spiegel
+    maintainer: Ada <ada@gnous.eu>
+    description: A light paste server
+    license: MPL-2.0
+    formats:
+      - deb
+      - rpm
+      - archlinux
+    umask: 002
+    provides:
+      - spiegel
+    contents:
+      - src: config.example.toml
+        dst: /etc/spiegel/config.toml
+      - src: deployment/goreleaser/spiegel.service
+        dst: /usr/lib/systemd/system/spiegel.service
+    scripts:
+      preinstall: "deployment/goreleaser/preinstall.sh"
+      preremove: "deployment/goreleaser/preremove.sh"
+      postremove: "deployment/goreleaser/postremove.sh"
+
+checksum:
+  algorithm: sha256
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - "^docs:"
+      - "^test:"

@@ -1,0 +1,12 @@
+[Unit]
+Description=A light git repository mirror tools
+After=network.target
+
+[Service]
+Type=simple
+User=spiegel
+
+ExecStart=/usr/bin/spiegel /etc/spiegel/config.toml
+
+[Install]
+WantedBy=multi-user.target

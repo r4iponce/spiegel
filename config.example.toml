@@ -1,4 +1,4 @@
-clonedirectory = "archive/"
+clonedirectory = "/var/lib/spiegel/"
 interval = 10
 
 [log]
