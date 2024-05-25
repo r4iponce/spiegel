@@ -3,3 +3,10 @@ steps:
     image: golang:1.22
     commands:
       - go test ./...
+
+when:
+  - event: pull_request
+    repo: ada/spiegel
+  - event: push
+    branch: main
+    repo: ada/spiegel
