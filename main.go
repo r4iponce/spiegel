@@ -9,6 +9,7 @@ import (
 	"git.gnous.eu/ada/spiegel/internal/config"
 	"git.gnous.eu/ada/spiegel/internal/cron"
 	"git.gnous.eu/ada/spiegel/internal/git"
+	"git.gnous.eu/ada/spiegel/internal/router"
 	"github.com/sirupsen/logrus"
 )
 
@@ -37,6 +38,9 @@ func main() {
 	initConfig.Log.Init()
 	logrus.Info("Config loaded")
 	logrus.Debug("Config: ", initConfig)
+
+	routerConfig := router.Config{Listen: ":3000", Archive: initConfig.CloneDirectory}
+	go routerConfig.Router()
 
 	git.StartClone(initConfig.RepoList)
 

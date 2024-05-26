@@ -8,11 +8,13 @@ import (
 
 	"git.gnous.eu/ada/spiegel/internal/utils"
 	goGit "github.com/go-git/go-git/v5"
+	"github.com/go-git/go-git/v5/plumbing/serverinfo"
 	"github.com/go-git/go-git/v5/plumbing/transport/ssh"
+	"github.com/go-git/go-git/v5/storage/filesystem"
 	"github.com/sirupsen/logrus"
 )
 
-func StartClone(repoList []RepoConfig) {
+func StartClone(repoList []Config) {
 	logrus.Debug("Start first repository clone")
 	for _, content := range repoList {
 		_, err := os.Stat(content.FullPath)
@@ -22,7 +24,7 @@ func StartClone(repoList []RepoConfig) {
 	}
 }
 
-func (c RepoConfig) fullClone() {
+func (c Config) fullClone() {
 	logrus.Debug("Clone ", c.Name, "...")
 	logger := logrus.New()
 	w := logger.Writer()
@@ -66,9 +68,14 @@ func (c RepoConfig) fullClone() {
 	if err != nil {
 		logrus.Error(err)
 	}
+
+	err = c.UpdateInfo()
+	if err != nil {
+		logrus.Error(err)
+	}
 }
 
-func (c RepoConfig) Update() {
+func (c Config) Update() {
 	repo, err := goGit.PlainOpen(c.FullPath)
 	if err != nil {
 		logrus.Error(err)
@@ -117,4 +124,23 @@ func (c RepoConfig) Update() {
 			logrus.Error(err)
 		}
 	}
+
+	err = c.UpdateInfo()
+	if err != nil {
+		logrus.Error(err)
+	}
+}
+
+func (c Config) UpdateInfo() error {
+	r, err := goGit.PlainOpen(c.FullPath)
+	if err != nil {
+		return err
+	}
+
+	err = serverinfo.UpdateServerInfo(r.Storer, r.Storer.(*filesystem.Storage).Filesystem()) //nolint: forcetypeassert
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

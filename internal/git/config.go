@@ -1,6 +1,6 @@
 package git
 
-type RepoConfig struct {
+type Config struct {
 	URL      string // Source url
 	FullPath string // Full clone directory
 	Name     string // Name of clone (directory name)

@@ -18,7 +18,7 @@ func start(duration time.Duration, fn func(), name string) {
 }
 
 // Launch all repo update background tasks.
-func Launch(duration time.Duration, config []git.RepoConfig) {
+func Launch(duration time.Duration, config []git.Config) {
 	var counter int
 	for _, content := range config {
 		counter++
