@@ -6,7 +6,7 @@ require (
 	github.com/go-git/go-git/v5 v5.12.0
 	github.com/pelletier/go-toml/v2 v2.2.2
 	github.com/sirupsen/logrus v1.9.3
-	golang.org/x/sys v0.20.0
+	golang.org/x/sys v0.21.0
 )
 
 require (
