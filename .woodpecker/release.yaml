@@ -1,6 +1,6 @@
 steps:
   - name: Release
-    image: golang:1.22.5
+    image: golang:1.22.6
     commands:
       - go install github.com/goreleaser/goreleaser@latest
       - goreleaser release
